@@ -1,0 +1,22 @@
+
+version: '3'
+
+services:
+  cube:
+    image: cubejs/cube:v0.30.3
+    ports:
+      # It's better to use random port binding for 4000/3000 ports
+      # without it you will not able to start multiple projects inside docker
+      - 4000:4000  # Dashboard app, if created
+    env_file: .env
+    volumes:
+      - .:/cube/conf
+      # We ignore Cube.js deps, because they are built-in inside the official Docker image
+      - .empty:/cube/conf/node_modules/@cubejs-backend/
+  postgres: # hostname
+    image: postgres
+    environment: # default user is postgres
+      POSTGRES_PASSWORD: "pass123"
+      POSTGRES_DB: "cubejs-test" #database name
+    ports:
+      - "5432:5432"

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { LineChart, Line, XAxis, YAxis } from 'recharts';
+import { LineChart, Line, Tooltip, Legend, CartesianGrid, XAxis, YAxis } from 'recharts';
 import cubejs from '@cubejs-client/core';
 import { QueryRenderer } from '@cubejs-client/react';
 
@@ -21,22 +21,26 @@ export default () => {
           return 'Loading...';
         }
         return(
+          <div className='Chart'>
+            <h2>Chart</h2>
           <LineChart 
-            width={600} 
-            height={400}       
-            margin={{
-            top: 10,
-
-          }} data={resultSet.rawData()}>
-          <XAxis dataKey="Orders.status" />
-          <YAxis />
-          <Line
-            type="monotone"
-            dataKey="Orders.count"
-            stroke="#8884d8"
-          />
-          <Line type="monotone" dataKey="Orders.status" stroke="#82ca9d" />
+            width={800} 
+            height={300}   
+            data={resultSet.rawData()}>
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis dataKey="Orders.status" />
+            <YAxis
+            />
+            <Tooltip />
+            <Legend />
+            <Line
+              type="monotone"
+              dataKey="Orders.count"
+              stroke="#8884d8"
+              activeDot={{ r: 8 }}
+            />
           </LineChart>
+          </div>
         )
       }}
     />

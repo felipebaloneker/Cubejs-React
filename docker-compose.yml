@@ -12,7 +12,7 @@ services:
       - shared-networks    
 
   cube:
-    container_name: cubejs-api
+    container_name: api
     image: cubejs/cube:v0.30.3
     restart: always
     ports:
@@ -27,11 +27,13 @@ services:
       - shared-networks
 
   client:
-    container_name: cubejs-client
+    container_name: client
     image: cubejs-client-prod:1.0.0
     build:
         context: client
         dockerfile: Dockerfile
+    volumes:
+      - node_modules:/usr/src/client/node_modules
     ports: 
       - 3000:3000
     networks:

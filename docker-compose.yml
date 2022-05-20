@@ -8,6 +8,8 @@ services:
       POSTGRES_DB: "cubejs-test" #database name
     ports:
       - "5432:5432"
+    networks:
+      - shared-networks    
 
   cube:
     container_name: cubejs-api
@@ -19,3 +21,22 @@ services:
     volumes:
       - .:/cube/conf
       - .empty:/cube/conf/node_modules/@cubejs-backend/
+    depends_on:
+      - postgres
+    networks:
+      - shared-networks
+
+  client:
+    container_name: cubejs-client
+    image: cubejs-client-prod:1.0.0
+    build:
+        context: client
+        dockerfile: Dockerfile
+    ports: 
+      - 3000:3000
+    networks:
+      - shared-networks
+    depends_on:
+      - cube
+networks:
+  shared-networks:

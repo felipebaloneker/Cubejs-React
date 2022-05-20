@@ -1,0 +1,20 @@
+version: '3'
+
+services:
+  postgres: # hostname
+    image: postgres
+    environment: # default user is postgres
+      POSTGRES_PASSWORD: "pass123"
+      POSTGRES_DB: "cubejs-test" #database name
+    ports:
+      - "5432:5432"
+
+  cube:
+    image: cubejs/cube:v0.30.3
+    restart: always
+    ports:
+      - 4000:4000  # Dashboard app, if created
+    env_file: .env
+    volumes:
+      - .:/cube/conf
+      - .empty:/cube/conf/node_modules/@cubejs-backend/

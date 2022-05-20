@@ -10,6 +10,7 @@ services:
       - "5432:5432"
 
   cube:
+    container_name: cubejs-api
     image: cubejs/cube:v0.30.3
     restart: always
     ports:

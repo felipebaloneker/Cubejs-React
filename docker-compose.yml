@@ -29,13 +29,14 @@ services:
   client:
     container_name: client
     image: cubejs-client-prod:1.0.0
+    env_file: .env
     build:
         context: client
         dockerfile: Dockerfile
-    volumes:
-      - node_modules:/usr/src/client/node_modules
     ports: 
       - 3000:3000
+    environment:
+      NODE_ENV: /usr/src/client/node_modules
     networks:
       - shared-networks
     depends_on:
